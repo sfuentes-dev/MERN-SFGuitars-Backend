@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend App MinTic22 Ciclo 3 - eCommerce de Guitarras",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "MERN",
+    "React",
+    "Redux",
+    "Express",
+    "MongoDB"
+  ],
+  "author": "Sebastian Fuentes",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cloudinary": "^1.32.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0",
+    "nodemon": "^2.0.20",
+    "socket.io": "^4.5.3",
+    "stripe": "^10.15.0",
+    "validator": "^13.7.0"
+  }
+}
