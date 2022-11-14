@@ -7,7 +7,7 @@ const router = express.Router()
 //Creando la Orden de compra
 
 router.post('/', async (req, res) => {
-  // const io = req.app.get('socketio')
+  const io = req.app.get('socketio')
   const { userId, cart, country, address } = req.body
   try {
     const user = await User.findById(userId)
@@ -22,12 +22,12 @@ router.post('/', async (req, res) => {
     await order.save()
     user.cart = { total: 0, count: 0 }
     user.orders.push(order)
-    // const notification = {
-    //   status: 'unread',
-    //   message: `New order from ${user.name}`,
-    //   time: new Date(),
-    // }
-    // io.sockets.emit('new-order', notification)
+    const notification = {
+      status: 'unread',
+      message: `New order from ${user.name}`,
+      time: new Date(),
+    }
+    io.sockets.emit('new-order', notification)
     user.markModified('orders')
     await user.save()
     res.status(200).json(user)
@@ -49,21 +49,21 @@ router.get('/', async (req, res) => {
 //Haciendo el "envio" de la orden al usuario
 
 router.patch('/:id/mark-shipped', async (req, res) => {
-  // const io = req.app.get('socketio')
+  const io = req.app.get('socketio')
   const { ownerId } = req.body
   const { id } = req.params
   try {
     const user = await User.findById(ownerId)
     await Order.findByIdAndUpdate(id, { status: 'shipped' })
     const orders = await Order.find().populate('owner', ['email', 'name'])
-    // const notification = {
-    //   status: 'unread',
-    //   message: `Order ${id} shipped with success`,
-    //   time: new Date(),
-    // }
-    // io.sockets.emit('notification', notification, ownerId)
-    // user.notifications.push(notification)
-    // await user.save()
+    const notification = {
+      status: 'unread',
+      message: `Order ${id} shipped with success`,
+      time: new Date(),
+    }
+    io.sockets.emit('notification', notification, ownerId)
+    user.notifications.unshift(notification)
+    await user.save()
     res.status(200).json(orders)
   } catch (e) {
     res.status(400).json(e.message)

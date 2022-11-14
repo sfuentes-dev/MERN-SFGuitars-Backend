@@ -7,6 +7,9 @@ import productRoutes from './routes/productRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import imageRoutes from './routes/imageRoutes.js'
 import Stripe from 'stripe'
+import { Server } from 'socket.io'
+
+import * as http from 'http'
 
 const app = express()
 
@@ -43,6 +46,15 @@ app.post('/create-payment', async (req, res) => {
 
 const PORT = process.env.PORT || 4000
 
-app.listen(PORT, () => {
-  console.log('Server Running in Port 4000')
+// const server = http.createServer(app)
+
+const server = http.createServer(app).listen(PORT, () => {
+  console.log(`Server Running in Port ${PORT}`)
 })
+
+const io = new Server(server, {
+  cors: 'http://127.0.0.1:5173',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+})
+
+app.set('socketio', io)
