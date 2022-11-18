@@ -5,9 +5,9 @@ import dotenv from 'dotenv'
 const router = express.Router()
 
 cloudinary.config({
-  cloud_name: 'sfuentes-dev16',
-  api_key: '954791121425873',
-  api_secret: '7R7y6TdD1s_iHdYL6r-okurtt_M',
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 })
 
 router.delete('/:public_id', async (req, res) => {
