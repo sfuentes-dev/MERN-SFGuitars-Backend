@@ -4,6 +4,9 @@
   "description": "Backend App MinTic22 Ciclo 3 - eCommerce de Guitarras",
   "type": "module",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
