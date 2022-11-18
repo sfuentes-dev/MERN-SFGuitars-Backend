@@ -24,9 +24,7 @@ app.use('/products', productRoutes)
 app.use('/orders', orderRoutes)
 app.use('/images', imageRoutes)
 
-const stripe = new Stripe(
-  'sk_test_51LzMxFEBa3jZyODKYffCZFjYYTgzgQP83kMaqmjl5J0NYeZEqAojxbVzvqYQuKODSKHrf9e3FBRTztx9FPTt5i0C00W5XVZwqA'
-)
+const stripe = new Stripe(process.env.STRIPE_SECRET)
 
 app.post('/create-payment', async (req, res) => {
   const { amount } = req.body
@@ -53,7 +51,7 @@ const server = http.createServer(app).listen(PORT, () => {
 })
 
 const io = new Server(server, {
-  cors: 'http://127.0.0.1:5173',
+  cors: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 })
 
